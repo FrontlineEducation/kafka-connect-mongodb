@@ -10,7 +10,7 @@ RUN mvn clean package -DskipTests
 # Runtime stage
 #-------------------------------------#
 FROM frekele/java:jdk8
-MAINTAINER jkabonick@frontlineed.com
+MAINTAINER DIST_Technology_Dev_Systems@frontlineed.com
 
 # Install kafka
 ENV SCALA_VERSION="2.11" \
