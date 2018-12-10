@@ -27,13 +27,13 @@ RUN set -x && \
     apt install libonig4 && \
     apt install libjq1 && \
     apt install jq && \
-    apt install unzip curl ca-certificates gnupg && \
+    apt install --yes unzip curl ca-certificates gnupg && \
     eval $(gpg-agent --daemon) && \
-    MIRROR=`curl -sSL https://www.apache.org/dyn/closer.cgi\?as_json\=1 | jq -r '.preferred'` && \
+    MIRROR="https://archive.apache.org/dist/" && \
     curl -sSLO "${MIRROR}kafka/${KAFKA_VERSION}/${KAFKA_DIST_TGZ}" && \
-    curl -sSLO https://dist.apache.org/repos/dist/release/kafka/${KAFKA_VERSION}/${KAFKA_DIST_ASC} && \
-    curl -sSL  https://kafka.apache.org/KEYS | gpg -q --import - && \
-    gpg -q --verify ${KAFKA_DIST_ASC} && \
+    curl -sSLO https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/${KAFKA_DIST_ASC} && \
+    curl -sSL  https://kafka.apache.org/KEYS | gpg -q --import --no-tty && \
+    gpg -q --verify ${KAFKA_DIST_ASC} && \ 
     mkdir -p /opt && \
     mv ${KAFKA_DIST_TGZ} /tmp && \
     tar xfz /tmp/${KAFKA_DIST_TGZ} -C /opt && \
