@@ -1,0 +1,32 @@
+version: '1.0'
+stages: [ 'Build', 'Push' ]
+
+steps:
+ BumpTagVersion:
+   title: Bump Tag Version
+   image: ${{ECR}}/sys-tagging
+   commands: [ 'bump_tag_version.sh' ]
+   
+ BuildingDockerImage:
+   title: Building Docker Image
+   stage: Build
+   type: build
+   image_name: ${{QUAY_REPO}}
+   build_arguments:
+     - config=Release
+     - nugetconfig=${{nugetconfig}}
+
+ PushToDockerRegistry:
+   when: { branch: { only: [ '${{DEFAULT_BRANCH}}' ] } }
+   title: Push to Quay, Only DEFAULT Branch
+   stage: Push
+   type: push
+   candidate: "${{BuildingDockerImage}}"
+   tags: [ 'latest', "${{TAG}}", "${{CF_BUILD_ID}}" ]
+   registry: quay
+
+ PushTag:
+   title: Push Tag
+   stage: Push
+   image: ${{ECR}}/sys-tagging
+   commands: [ 'push_tag.sh' ]

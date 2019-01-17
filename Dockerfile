@@ -33,7 +33,7 @@ RUN set -x && \
     curl -sSLO "${MIRROR}kafka/${KAFKA_VERSION}/${KAFKA_DIST_TGZ}" && \
     curl -sSLO https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/${KAFKA_DIST_ASC} && \
     curl -sSL  https://kafka.apache.org/KEYS | gpg -q --import --no-tty && \
-    gpg -q --verify ${KAFKA_DIST_ASC} && \ 
+    gpg -q --verify ${KAFKA_DIST_ASC} && \
     mkdir -p /opt && \
     mv ${KAFKA_DIST_TGZ} /tmp && \
     tar xfz /tmp/${KAFKA_DIST_TGZ} -C /opt && \
