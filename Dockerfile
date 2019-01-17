@@ -1,3 +1,4 @@
+#-------------------------------------#
 # Build stage
 #-------------------------------------#
 FROM maven:3.5.2-jdk-8-alpine as build
@@ -5,12 +6,12 @@ FROM maven:3.5.2-jdk-8-alpine as build
 # Copy connectors
 COPY . .
 RUN mvn clean package -DskipTests
-#-------------------------------------#
 
+#-------------------------------------#
 # Runtime stage
 #-------------------------------------#
 FROM frekele/java:jdk8
-MAINTAINER jkabonick@frontlineed.com
+MAINTAINER DIST_Technology_Dev_Systems@frontlineed.com
 
 # Install kafka
 ENV SCALA_VERSION="2.11" \
@@ -27,12 +28,12 @@ RUN set -x && \
     apt install libonig4 && \
     apt install libjq1 && \
     apt install jq && \
-    apt install unzip curl ca-certificates gnupg && \
+    apt install --yes unzip curl ca-certificates gnupg && \
     eval $(gpg-agent --daemon) && \
-    MIRROR=`curl -sSL https://www.apache.org/dyn/closer.cgi\?as_json\=1 | jq -r '.preferred'` && \
+    MIRROR="https://archive.apache.org/dist/" && \
     curl -sSLO "${MIRROR}kafka/${KAFKA_VERSION}/${KAFKA_DIST_TGZ}" && \
-    curl -sSLO https://dist.apache.org/repos/dist/release/kafka/${KAFKA_VERSION}/${KAFKA_DIST_ASC} && \
-    curl -sSL  https://kafka.apache.org/KEYS | gpg -q --import - && \
+    curl -sSLO https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/${KAFKA_DIST_ASC} && \
+    curl -sSL  https://kafka.apache.org/KEYS | gpg -q --import --no-tty && \
     gpg -q --verify ${KAFKA_DIST_ASC} && \
     mkdir -p /opt && \
     mv ${KAFKA_DIST_TGZ} /tmp && \
