@@ -6,7 +6,7 @@ steps:
    title: Bump Tag Version
    image: ${{ECR}}/sys-tagging
    commands: [ 'bump_tag_version.sh' ]
-   
+
  BuildingDockerImage:
    title: Building Docker Image
    stage: Build
