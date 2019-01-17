@@ -1,3 +1,4 @@
+#-------------------------------------#
 # Build stage
 #-------------------------------------#
 FROM maven:3.5.2-jdk-8-alpine as build
@@ -5,8 +6,8 @@ FROM maven:3.5.2-jdk-8-alpine as build
 # Copy connectors
 COPY . .
 RUN mvn clean package -DskipTests
-#-------------------------------------#
 
+#-------------------------------------#
 # Runtime stage
 #-------------------------------------#
 FROM frekele/java:jdk8
