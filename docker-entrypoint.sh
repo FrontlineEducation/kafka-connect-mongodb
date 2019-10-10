@@ -31,7 +31,7 @@ if [[ -z "$CONNECT_GROUP_ID" ]]; then
 fi
 
 # Set JMX
-export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=${CONNECT_REST_ADVERTISED_HOST_NAME} -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=${CONNECT_REST_ADVERTISED_HOST_NAME} -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Xmx512M"
 
 # Extend CLASSPATH for custom connectors
 export CLASSPATH=${CLASSPATH}:${KAFKA_HOME}/connectors/*
